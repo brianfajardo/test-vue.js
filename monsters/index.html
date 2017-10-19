@@ -10,11 +10,16 @@
 
 <body>
   <div id="app">
+    <!-- Health point bars -->
     <section class="row">
       <div class="small-6 columns">
         <h1 class="text-center">PLAYER</h1>
         <div class="healthbar">
-          <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" :style="{width: playerHealth + '%'}">
+          <div
+            class="healthbar text-center"
+            style="background-color: green; margin: 0; color: white;"
+            :style="{width: playerHealth + '%'}"
+          >
             HP: {{ playerHealth }}
           </div>
         </div>
@@ -22,12 +27,18 @@
       <div class="small-6 columns">
         <h1 class="text-center">MONSTER</h1>
         <div class="healthbar">
-          <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" :style="{width: monsterHealth + '%'}">
+          <div
+            class="healthbar text-center"
+            style="background-color: green; margin: 0; color: white;"
+            :style="{width: monsterHealth + '%'}"
+          >
             HP: {{ monsterHealth }}
           </div>
         </div>
       </div>
     </section>
+
+    <!-- Actions  -->
     <section class="row controls" v-if="!gameStarted">
       <div class="small-12 columns">
         <button id="start-game" @click="initGame">Start New Game</button>
@@ -41,14 +52,23 @@
         <button id="give-up" @click="initGame">Restart</button>
       </div>
     </section>
+
+    <!-- Turn log -->
     <section class="row log" v-if="turnLog.length > 0">
       <div class="small-12 columns">
-        <ul v-for="turn in turnLog">
-          <li>{{ turn.text }}</li>
+        <ul>
+          <li
+            v-for="turn in turnLog"
+            :class="{'player-turn': turn.isPlayerTurn, 'monster-turn': !turn.isPlayerTurn, 'player-heal': turn.isHealing}"
+          >
+            {{ turn.text }}
+          </li>
         </ul>
       </div>
     </section>
   </div>
+
+  <!-- Scripts -->
   <script src="./app.js"></script>
 </body>
 

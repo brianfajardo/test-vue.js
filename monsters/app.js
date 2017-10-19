@@ -18,6 +18,7 @@ new Vue({
       this.monsterHealth -= damage
       this.turnLog.unshift({
         text: `Player tickles Monster for ${damage} damage`,
+        isPlayerTurn: true
       })
       if (this.checkWin()) return
       this.monsterAttack()
@@ -26,6 +27,7 @@ new Vue({
       const damage = this.calculateDamage(5, 15)
       this.monsterHealth -= this.turnLog.unshift({
         text: `Player crits the monster for ${damage} damage`,
+        isPlayerTurn: true
       })
       if (this.checkWin()) return
       this.monsterAttack()
@@ -35,11 +37,13 @@ new Vue({
         this.playerHealth += 20
         this.turnLog.unshift({
           text: 'Player healed for 20 HP',
+          isHealing: true
         })
       } else {
         this.playerHealth = 100
         this.turnLog.unshift({
           text: 'Player healed to full HP',
+          isHealing: true
         })
       }
       this.monsterAttack()
@@ -52,6 +56,7 @@ new Vue({
       this.playerHealth -= damage
       this.turnLog.unshift({
         text: `Monster smashes Player for ${damage} damage`,
+        isPlayerTurn: false
       })
       this.checkWin()
     },
