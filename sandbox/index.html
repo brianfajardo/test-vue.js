@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./vue.js"></script>
+  <title>🏄 Hello Vue!</title>
+</head>
+
+<body>
+  <!-- vue components -->
+  <div id="app">
+    <h1>Episode 21</h1>
+    <p v-once>{{ title }}</p>
+    <p>{{ sayHello() }} -
+      <a v-bind:href="link" target="_blank">Google</a>
+    </p>
+    <hr>
+    <h1 v-html="finishedLink"></h1>
+    <hr>
+    <div>
+      <button v-on:click="increaseOnClick(5, $event)">Click me</button>
+      <p>Click counter: {{ counter }}</p>
+    </div>
+    <hr>
+    <p v-on:mousemove="updateCoordinates">Mouse coordinates: ({{ x }}, {{ y }}) -
+      <span v-on:mousemove.stop>DEAD SPOT</span>
+    </p>
+    <hr>
+    <label>Console.log input on enter key: </label>
+    <input type="text" v-on:keyup.enter="consoleLogInput">
+  </div>
+
+  <!-- scripts -->
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        title: 'ORIGINAL HELLO WORLD.',
+        link: 'https://www.google.ca',
+        finishedLink: '<a href="https://www.google.ca" target="_blank">Google</a>',
+        counter: 0,
+        x: 0,
+        y: 0
+      },
+      methods: {
+        sayHello: function () {
+          this.title = "hello!"
+          return this.title
+        },
+        increaseOnClick: function (step, e) {
+          this.counter += step
+        },
+        updateCoordinates: function (e) {
+          this.x = e.clientX
+          this.y = e.clientY
+        },
+        consoleLogInput: function (e) {
+          console.log(e.target.value)
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
