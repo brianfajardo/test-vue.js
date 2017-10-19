@@ -13,32 +13,36 @@
     <!-- Health point bars -->
     <section class="row">
       <div class="small-6 columns">
-        <h1 class="text-center">PLAYER</h1>
+        <h1 class="text-center">{{ username }}</h1>
         <div class="healthbar">
           <div
             class="healthbar text-center"
             style="background-color: green; margin: 0; color: white;"
             :style="{width: playerHealth + '%'}"
           >
-            HP: {{ playerHealth }}
+            <template v-if="playerHealth != 100">
+              HP: {{ playerHealth }}/100
+            </template>
           </div>
         </div>
       </div>
       <div class="small-6 columns">
-        <h1 class="text-center">MONSTER</h1>
+        <h1 class="text-center">Monster</h1>
         <div class="healthbar">
           <div
             class="healthbar text-center"
             style="background-color: green; margin: 0; color: white;"
             :style="{width: monsterHealth + '%'}"
           >
-            HP: {{ monsterHealth }}
+            <template v-if="monsterHealth != 100">
+              HP: {{ monsterHealth }}/100
+            </template>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Actions  -->
+    <!-- Player actions  -->
     <section class="row controls" v-if="!gameStarted">
       <div class="small-12 columns">
         <button id="start-game" @click="initGame">Start New Game</button>
@@ -59,7 +63,11 @@
         <ul>
           <li
             v-for="turn in turnLog"
-            :class="{'player-turn': turn.isPlayerTurn, 'monster-turn': !turn.isPlayerTurn, 'player-heal': turn.isHealing}"
+            :class="{
+              'player-turn': turn.isPlayerTurn,
+              'monster-turn': !turn.isPlayerTurn,
+              'player-heal': turn.isHealing
+            }"
           >
             {{ turn.text }}
           </li>

@@ -1,10 +1,21 @@
 new Vue({
   el: '#app',
   data: {
+    username: '',
     gameStarted: false,
     playerHealth: 100,
     monsterHealth: 100,
     turnLog: [],
+  },
+  beforeMount: function() {
+    const textPrompt = prompt(
+      "You've been summoned to battle a monster. What is your fantasy name?"
+    )
+    if (textPrompt.trim() === '') {
+      this.username = 'Player'
+    } else {
+      this.username = textPrompt
+    }
   },
   methods: {
     initGame: function() {
@@ -17,8 +28,8 @@ new Vue({
       const damage = this.calculateDamage(3, 10)
       this.monsterHealth -= damage
       this.turnLog.unshift({
-        text: `Player tickles Monster for ${damage} damage`,
-        isPlayerTurn: true
+        text: `${this.username} tickles Monster for ${damage} damage`,
+        isPlayerTurn: true,
       })
       if (this.checkWin()) return
       this.monsterAttack()
@@ -26,8 +37,8 @@ new Vue({
     specialAttack: function() {
       const damage = this.calculateDamage(5, 15)
       this.monsterHealth -= this.turnLog.unshift({
-        text: `Player crits the monster for ${damage} damage`,
-        isPlayerTurn: true
+        text: `${this.username} crits the monster for ${damage} damage`,
+        isPlayerTurn: true,
       })
       if (this.checkWin()) return
       this.monsterAttack()
@@ -36,14 +47,14 @@ new Vue({
       if (this.playerHealth <= 90) {
         this.playerHealth += 20
         this.turnLog.unshift({
-          text: 'Player healed for 20 HP',
-          isHealing: true
+          text: `${this.username}  healed for 20 HP`,
+          isHealing: true,
         })
       } else {
         this.playerHealth = 100
         this.turnLog.unshift({
-          text: 'Player healed to full HP',
-          isHealing: true
+          text: `${this.username} healed to full HP`,
+          isHealing: true,
         })
       }
       this.monsterAttack()
@@ -55,8 +66,8 @@ new Vue({
       const damage = this.calculateDamage(10, 16)
       this.playerHealth -= damage
       this.turnLog.unshift({
-        text: `Monster smashes Player for ${damage} damage`,
-        isPlayerTurn: false
+        text: `Monster smashes ${this.username} for ${damage} damage`,
+        isPlayerTurn: false,
       })
       this.checkWin()
     },
